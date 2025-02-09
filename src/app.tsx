@@ -6,6 +6,7 @@ import Store from "@/contexts/store.tsx";
 import { Toaster } from "./components/ui/toaster";
 import LoadingSpinner from "./components/loading";
 import BlocklyDashboard from "./views/blockly-dashboard";
+import BlocklyProvider from "./contexts/blockly";
 const Home = lazy(() => import("@/views/home.tsx"));
 const NotFound = lazy(() => import("@/views/404.tsx"));
 
@@ -15,7 +16,14 @@ export default function App() {
       <Store>
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>
-            <Route path="/blockly" element={<BlocklyDashboard />} />
+            <Route
+              path="/blockly"
+              element={
+                <BlocklyProvider>
+                  <BlocklyDashboard />
+                </BlocklyProvider>
+              }
+            />
             <Route path="/" element={<Home />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
